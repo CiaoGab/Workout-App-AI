@@ -2,7 +2,7 @@
   "name": "workout-tracker",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://gabrielgarcia.github.io/workout-app-ai",
+  "homepage": "https://ciaogab.github.io/Workout-App-AI",
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "react": "^18.2.0",
