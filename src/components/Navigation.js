@@ -16,6 +16,9 @@ function Navigation() {
       <NavLink to="/formulas" className={({ isActive }) => isActive ? 'active' : ''}>
         Calculators
       </NavLink>
+      <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>
+        Contact
+      </NavLink>
     </nav>
   );
 }
