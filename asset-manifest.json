@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Workout-App-AI/static/css/main.0f6a52ab.css",
+    "main.js": "/Workout-App-AI/static/js/main.7a303e85.js",
+    "index.html": "/Workout-App-AI/index.html",
+    "main.0f6a52ab.css.map": "/Workout-App-AI/static/css/main.0f6a52ab.css.map",
+    "main.7a303e85.js.map": "/Workout-App-AI/static/js/main.7a303e85.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0f6a52ab.css",
+    "static/js/main.7a303e85.js"
+  ]
+}
