@@ -5,13 +5,16 @@ function Navigation() {
   return (
     <nav className="main-nav">
       <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>
-        Dashboard
+        Home
       </NavLink>
       <NavLink to="/weight-history" className={({ isActive }) => isActive ? 'active' : ''}>
         Weight History
       </NavLink>
       <NavLink to="/exercise-tracker" className={({ isActive }) => isActive ? 'active' : ''}>
         Exercise Tracker
+      </NavLink>
+      <NavLink to="/formulas" className={({ isActive }) => isActive ? 'active' : ''}>
+        Calculators
       </NavLink>
     </nav>
   );
