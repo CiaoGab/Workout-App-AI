@@ -1,9 +1,13 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import Navigation from './components/Navigation';
+import Dashboard from './pages/Dashboard';
+import WeightHistory from './pages/WeightHistory';
+import ExerciseTracker from './pages/ExerciseHistory';
 import WeightTracker from './components/WeightTracker';
 import HeartRateZones from './components/HeartRateZones';
 import TDEECalculator from './components/TDEECalculator';
-import ExerciseTracker from './components/ExerciseTracker';
 import GoalWeightCalculator from './components/GoalWeightCalculator';
 import { UnitProvider } from './context/UnitContext';
 
@@ -12,23 +16,14 @@ function AppContent() {
     <div className="app">
       <header>
         <h1>Fitness Journal</h1>
+        <Navigation />
       </header>
-      <main className="grid-container">
-        <div className="tdee-calculator">
-          <TDEECalculator />
-        </div>
-        <div className="weight-tracker">
-          <WeightTracker />
-        </div>
-        <div className="goal-weight-calculator">
-          <GoalWeightCalculator />
-        </div>
-        <div className="heart-rate-zones">
-          <HeartRateZones />
-        </div>
-        <div className="exercise-tracker">
-          <ExerciseTracker />
-        </div>
+      <main>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/weight-history" element={<WeightHistory />} />
+          <Route path="/exercise-tracker" element={<ExerciseTracker />} />
+        </Routes>
       </main>
     </div>
   );
@@ -36,9 +31,11 @@ function AppContent() {
 
 function App() {
   return (
-    <UnitProvider>
-      <AppContent />
-    </UnitProvider>
+    <Router>
+      <UnitProvider>
+        <AppContent />
+      </UnitProvider>
+    </Router>
   );
 }
 
