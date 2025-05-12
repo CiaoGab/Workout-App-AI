@@ -122,3 +122,23 @@ The application uses EmailJS for the contact form functionality. To ensure secur
    ```
 3. Replace the placeholder values with your actual EmailJS credentials
 4. Restart the development server after making these changes 
+
+## Deployment
+
+This application is deployed using GitHub Pages. To deploy your own version:
+
+1. Fork this repository
+2. Update the `homepage` field in `package.json` to match your GitHub Pages URL:
+   ```json
+   "homepage": "https://yourusername.github.io/your-repo-name"
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Deploy to GitHub Pages:
+   ```bash
+   npm run deploy
+   ```
+
+The site will be available at `https://yourusername.github.io/your-repo-name` 
