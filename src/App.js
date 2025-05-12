@@ -18,11 +18,11 @@ function AppContent() {
       </header>
       <main>
         <Routes>
-          <Route path="/Workout-App-AI" element={<Landing />} />
-          <Route path="/Workout-App-AI/weight-history" element={<WeightHistory />} />
-          <Route path="/Workout-App-AI/exercise-tracker" element={<ExerciseTracker />} />
-          <Route path="/Workout-App-AI/formulas" element={<Formulas />} />
-          <Route path="/Workout-App-AI/contact" element={<Contact />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/weight-history" element={<WeightHistory />} />
+          <Route path="/exercise-tracker" element={<ExerciseTracker />} />
+          <Route path="/formulas" element={<Formulas />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
     </div>
@@ -31,7 +31,7 @@ function AppContent() {
 
 function App() {
   return (
-    <Router basename="/Workout-App-AI">
+    <Router>
       <UnitProvider>
         <AppContent />
       </UnitProvider>

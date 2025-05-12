@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
-import { EMAILJS_CONFIG } from '../config/emailjs';
+import { EMAILJS_CONFIG } from '../config/emailjs.production';
 
 function Contact() {
   const [formData, setFormData] = useState({

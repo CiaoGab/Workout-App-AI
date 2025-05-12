@@ -125,20 +125,36 @@ The application uses EmailJS for the contact form functionality. To ensure secur
 
 ## Deployment
 
-This application is deployed using GitHub Pages. To deploy your own version:
+### Production Build
+1. Create a production build:
+```bash
+npm run build
+```
 
-1. Fork this repository
-2. Update the `homepage` field in `package.json` to match your GitHub Pages URL:
-   ```json
-   "homepage": "https://yourusername.github.io/your-repo-name"
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-4. Deploy to GitHub Pages:
-   ```bash
-   npm run deploy
-   ```
+2. The build folder will be created with optimized production files.
 
-The site will be available at `https://yourusername.github.io/your-repo-name` 
+### Environment Variables
+For production deployment, set these environment variables on your hosting platform:
+```
+REACT_APP_EMAILJS_SERVICE_ID=your_service_id
+REACT_APP_EMAILJS_TEMPLATE_ID=your_template_id
+REACT_APP_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+### Deployment Options
+1. Static Hosting (e.g., Netlify, Vercel, GitHub Pages):
+   - Connect your repository
+   - Set environment variables
+   - Deploy the build folder
+
+2. Traditional Hosting:
+   - Upload the contents of the build folder to your server
+   - Configure your server to serve index.html for all routes
+   - Set up environment variables on your server
+
+### Testing Production Build
+To test the production build locally:
+```bash
+npm install -g serve
+serve -s build
+``` 

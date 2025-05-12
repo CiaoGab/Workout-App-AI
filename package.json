@@ -2,7 +2,6 @@
   "name": "workout-tracker",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://ciaogab.github.io/Workout-App-AI",
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "react": "^18.2.0",
@@ -10,15 +9,12 @@
     "react-router-dom": "^7.6.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1",
     "react-scripts": "5.0.1"
   },
   "browserslist": {
