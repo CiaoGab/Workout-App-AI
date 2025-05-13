@@ -33,19 +33,6 @@ export function UnitProvider({ children }) {
       getHeightUnit
     }}>
       {children}
-      <div className="unit-toggle">
-        <label className="unit-toggle-label">
-          {isMetric ? 'Metric' : 'Imperial'}
-        </label>
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={isMetric}
-            onChange={toggleUnit}
-          />
-          <span className="unit-toggle-slider"></span>
-        </label>
-      </div>
     </UnitContext.Provider>
   );
 }

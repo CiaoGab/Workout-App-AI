@@ -1,25 +1,89 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useUnit } from '../context/UnitContext';
+import { useLocation } from 'react-router-dom';
 
 function Navigation() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isMetric, toggleUnit } = useUnit();
+  const location = useLocation();
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.classList.add('menu-open');
+    } else {
+      document.body.classList.remove('menu-open');
+    }
+  }, [isMenuOpen]);
+
+  const renderUnitToggle = () => {
+    // Don't render on home page
+    if (location.pathname === '/') {
+      return null;
+    }
+    
+    return (
+      <div className="unit-slider-container">
+        <span className={`unit-label ${isMetric ? 'active' : ''}`}>Metric</span>
+        <label className="unit-slider">
+          <input 
+            type="checkbox" 
+            checked={!isMetric} 
+            onChange={toggleUnit}
+          />
+          <span className="slider"></span>
+        </label>
+        <span className={`unit-label ${!isMetric ? 'active' : ''}`}>Imperial</span>
+      </div>
+    );
+  };
+
   return (
-    <nav className="main-nav">
-      <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''}>
-        Home
-      </NavLink>
-      <NavLink to="/weight-history" className={({ isActive }) => isActive ? 'active' : ''}>
-        Weight History
-      </NavLink>
-      <NavLink to="/exercise-tracker" className={({ isActive }) => isActive ? 'active' : ''}>
-        Exercise Tracker
-      </NavLink>
-      <NavLink to="/formulas" className={({ isActive }) => isActive ? 'active' : ''}>
-        Calculators
-      </NavLink>
-      <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''}>
-        Contact
-      </NavLink>
-    </nav>
+    <>
+      <button 
+        className={`hamburger-menu ${isMenuOpen ? 'active' : ''}`}
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div 
+        className={`nav-overlay ${isMenuOpen ? 'active' : ''}`}
+        onClick={closeMenu}
+      />
+
+      <nav className={`main-nav ${isMenuOpen ? 'active' : ''}`}>
+        <div className="nav-links">
+          <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
+            Home
+          </NavLink>
+          <NavLink to="/weight-history" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
+            Weight
+          </NavLink>
+          <NavLink to="/exercise-tracker" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
+            Exercise
+          </NavLink>
+          <NavLink to="/formulas" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
+            Calculators
+          </NavLink>
+          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
+            Contact
+          </NavLink>
+        </div>
+        {renderUnitToggle()}
+      </nav>
+    </>
   );
 }
 
