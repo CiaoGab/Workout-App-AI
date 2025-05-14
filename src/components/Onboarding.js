@@ -110,7 +110,7 @@ function Onboarding({ onComplete }) {
 
   const handleNext = () => {
     if (validateStep()) {
-      if (step === 4) {
+      if (step === 3) {
         handleSubmit();
       } else {
         setStep(prev => prev + 1);
@@ -139,149 +139,6 @@ function Onboarding({ onComplete }) {
       if (onComplete) onComplete();
       navigate('/dashboard');
     }
-  };
-
-  const calculatePreviewMetrics = () => {
-    const heightInInches = (parseInt(profile.height.feet) * 12) + parseInt(profile.height.inches);
-    let bmr;
-    if (profile.gender === 'male') {
-      bmr = Math.round((10 * profile.weight) + (6.25 * heightInInches) - (5 * profile.age) + 5);
-    } else {
-      bmr = Math.round((10 * profile.weight) + (6.25 * heightInInches) - (5 * profile.age) - 161);
-    }
-
-    const activityMultipliers = {
-      'sedentary': 1.2,
-      'lightly': 1.375,
-      'moderately': 1.55,
-      'very': 1.725,
-      'extremely': 1.9
-    };
-
-    const activityKey = profile.activityLevel.toLowerCase().split(' ')[0];
-    const tdee = Math.round(bmr * activityMultipliers[activityKey]);
-    const maxHR = 220 - parseInt(profile.age);
-
-    // Base adjustments for different goals
-    const baseAdjustments = {
-      'weight loss': -500,
-      'muscle gain': 500,
-      'endurance': -250,
-      'strength': 300,
-      'general fitness': 0,
-      'sports performance': 250
-    };
-
-    const goalKey = profile.goal.toLowerCase();
-    let targetCalories;
-
-    // If we have a weekly target and it's a weight-related goal, use it for precise calculation
-    if (profile.weeklyTarget && (goalKey === 'weight loss' || goalKey === 'muscle gain')) {
-      // 3500 calories ≈ 1 lb of fat/muscle
-      const weeklyCalorieAdjustment = profile.weeklyTarget * 3500;
-      const dailyCalorieAdjustment = Math.round(weeklyCalorieAdjustment / 7);
-      targetCalories = Math.round(tdee + dailyCalorieAdjustment);
-    } else {
-      // Use base adjustments for other goals
-      targetCalories = Math.round(tdee + (baseAdjustments[goalKey] || 0));
-    }
-
-    // Calculate macro distribution
-    const macroRatios = {
-      'weight loss': {
-        protein: 0.4,  // 40% of calories
-        fat: 0.3,      // 30% of calories
-        carbs: 0.3     // 30% of calories
-      },
-      'muscle gain': {
-        protein: 0.35, // 35% of calories
-        fat: 0.25,     // 25% of calories
-        carbs: 0.4     // 40% of calories
-      },
-      'endurance': {
-        protein: 0.25, // 25% of calories
-        fat: 0.25,     // 25% of calories
-        carbs: 0.5     // 50% of calories
-      },
-      'strength': {
-        protein: 0.35, // 35% of calories
-        fat: 0.3,      // 30% of calories
-        carbs: 0.35    // 35% of calories
-      },
-      'general fitness': {
-        protein: 0.3,  // 30% of calories
-        fat: 0.3,      // 30% of calories
-        carbs: 0.4     // 40% of calories
-      },
-      'sports performance': {
-        protein: 0.3,  // 30% of calories
-        fat: 0.25,     // 25% of calories
-        carbs: 0.45    // 45% of calories
-      }
-    };
-
-    const ratios = macroRatios[goalKey] || macroRatios['general fitness'];
-    const proteinCalories = Math.round(targetCalories * ratios.protein);
-    const fatCalories = Math.round(targetCalories * ratios.fat);
-    const carbsCalories = Math.round(targetCalories * ratios.carbs);
-
-    const proteinGrams = Math.round(proteinCalories / 4);
-    const carbsGrams = Math.round(carbsCalories / 4);
-    const fatGrams = Math.round(fatCalories / 9);
-
-    // Ensure minimum protein requirements (0.8g per pound of body weight)
-    const minProteinGrams = Math.round(profile.weight * 0.8);
-    let finalMacros;
-    
-    if (proteinGrams < minProteinGrams) {
-      const additionalProteinGrams = minProteinGrams - proteinGrams;
-      const additionalProteinCalories = additionalProteinGrams * 4;
-      const adjustedCarbsGrams = Math.round((carbsCalories - additionalProteinCalories) / 4);
-      
-      finalMacros = {
-        protein: {
-          grams: minProteinGrams,
-          calories: minProteinGrams * 4,
-          percentage: (minProteinGrams * 4) / targetCalories
-        },
-        carbs: {
-          grams: adjustedCarbsGrams,
-          calories: adjustedCarbsGrams * 4,
-          percentage: (adjustedCarbsGrams * 4) / targetCalories
-        },
-        fat: {
-          grams: fatGrams,
-          calories: fatGrams * 9,
-          percentage: (fatGrams * 9) / targetCalories
-        }
-      };
-    } else {
-      finalMacros = {
-        protein: {
-          grams: proteinGrams,
-          calories: proteinCalories,
-          percentage: ratios.protein
-        },
-        carbs: {
-          grams: carbsGrams,
-          calories: carbsCalories,
-          percentage: ratios.carbs
-        },
-        fat: {
-          grams: fatGrams,
-          calories: fatCalories,
-          percentage: ratios.fat
-        }
-      };
-    }
-
-    return {
-      bmr,
-      tdee,
-      maxHR,
-      targetCalories,
-      macros: finalMacros
-    };
   };
 
   const renderStep = () => {
@@ -500,58 +357,6 @@ function Onboarding({ onComplete }) {
           </div>
         );
 
-      case 4:
-        const metrics = calculatePreviewMetrics();
-        return (
-          <div className="onboarding-step">
-            <h2>Your Fitness Plan Preview</h2>
-            <div className="preview-metrics">
-              <div className="metric-card">
-                <h3>Basic Metrics</h3>
-                <p>Basal Metabolic Rate (BMR): {metrics.bmr} calories/day</p>
-                <p>Total Daily Energy Expenditure (TDEE): {metrics.tdee} calories/day</p>
-                <p>Target Daily Calories: {metrics.targetCalories} calories/day</p>
-                <p>Maximum Heart Rate: {metrics.maxHR} bpm</p>
-              </div>
-              <div className="metric-card">
-                <h3>Macro Distribution</h3>
-                <div className="macro-preview">
-                  <div className="macro-item">
-                    <span className="macro-label">Protein</span>
-                    <span className="macro-value">{metrics.macros.protein.grams}g ({Math.round(metrics.macros.protein.percentage * 100)}%)</span>
-                  </div>
-                  <div className="macro-item">
-                    <span className="macro-label">Carbs</span>
-                    <span className="macro-value">{metrics.macros.carbs.grams}g ({Math.round(metrics.macros.carbs.percentage * 100)}%)</span>
-                  </div>
-                  <div className="macro-item">
-                    <span className="macro-label">Fat</span>
-                    <span className="macro-value">{metrics.macros.fat.grams}g ({Math.round(metrics.macros.fat.percentage * 100)}%)</span>
-                  </div>
-                </div>
-              </div>
-              <div className="metric-card">
-                <h3>Your Profile</h3>
-                <p>Age: {profile.age}</p>
-                <p>Gender: {profile.gender}</p>
-                <p>Height: {profile.height.feet}'{profile.height.inches}"</p>
-                <p>Weight: {profile.weight} lbs</p>
-                <p>Goal Weight: {profile.goalWeight} lbs</p>
-                {profile.goal === 'weight loss' && (
-                  <p>Weekly Weight Loss Target: {profile.weeklyTarget} lbs/week</p>
-                )}
-                <p>Fitness Level: {profile.fitnessLevel}</p>
-                <p>Activity Level: {profile.activityLevel}</p>
-                <p>Goal: {profile.goal}</p>
-              </div>
-            </div>
-            <p className="preview-note">
-              These calculations will be used to create your personalized fitness plan. 
-              You can always adjust your goals and preferences later in your profile settings.
-            </p>
-          </div>
-        );
-
       default:
         return null;
     }
@@ -563,7 +368,7 @@ function Onboarding({ onComplete }) {
         <div className="progress-bar">
           <div 
             className="progress" 
-            style={{ width: `${(step / 4) * 100}%` }}
+            style={{ width: `${(step / 3) * 100}%` }}
           />
         </div>
         
@@ -581,10 +386,10 @@ function Onboarding({ onComplete }) {
           )}
           <button 
             type="button" 
-            className={step === 4 ? "submit-button" : "next-button"}
+            className={step === 3 ? "submit-button" : "next-button"}
             onClick={handleNext}
           >
-            {step === 4 ? 'Complete Setup' : 'Next'}
+            {step === 3 ? 'Complete Setup' : 'Next'}
           </button>
         </div>
       </div>
