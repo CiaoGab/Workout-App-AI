@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, NavLink } from 'react-router-dom';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,9 +25,15 @@ function Header() {
             <Link to="/" onClick={closeMenu} className={location.pathname === '/' ? 'active' : ''}>
               Home
             </Link>
-            <Link to="/dashboard" onClick={closeMenu} className={location.pathname === '/dashboard' ? 'active' : ''}>
+            <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>
               Dashboard
-            </Link>
+            </NavLink>
+            <NavLink to="/exercise-tracker" className={({ isActive }) => isActive ? 'active' : ''}>
+              Exercise Tracker
+            </NavLink>
+            <NavLink to="/macro-calculator" className={({ isActive }) => isActive ? 'active' : ''}>
+              Macro Calculator
+            </NavLink>
             <Link to="/contact" onClick={closeMenu} className={location.pathname === '/contact' ? 'active' : ''}>
               Contact
             </Link>

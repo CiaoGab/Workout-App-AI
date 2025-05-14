@@ -18,7 +18,16 @@ function Dashboard() {
 
   const handleEdit = (section) => {
     setEditingSection(section);
-    setEditForm(fitnessPlan[section]);
+    // For goals section, we need to get the data from profile
+    if (section === 'goals') {
+      setEditForm({
+        goal: profile.goal || '',
+        goalWeight: profile.goalWeight || '',
+        weeklyTarget: profile.weeklyTarget || ''
+      });
+    } else {
+      setEditForm(fitnessPlan[section] || {});
+    }
   };
 
   const handleRecalculate = () => {
@@ -44,16 +53,19 @@ function Dashboard() {
   };
 
   const handleSave = (section) => {
-    const updatedPlan = {
-      ...fitnessPlan,
-      [section]: editForm
-    };
-    
-    // If profile is updated, recalculate metrics
-    if (section === 'profile') {
-      initializeFitnessPlan(editForm);
-    } else {
+    if (section === 'goals') {
+      const updatedPlan = {
+        ...fitnessPlan,
+        profile: {
+          ...fitnessPlan.profile,
+          goal: editForm.goal,
+          goalWeight: editForm.goalWeight,
+          weeklyTarget: editForm.weeklyTarget
+        }
+      };
       updateFitnessPlan(updatedPlan);
+    } else if (section === 'profile') {
+      initializeFitnessPlan(editForm);
     }
     
     setEditingSection(null);
@@ -88,6 +100,8 @@ function Dashboard() {
   };
 
   const renderEditForm = (section) => {
+    if (!editForm) return null;
+
     switch (section) {
       case 'profile':
         return (
@@ -97,7 +111,7 @@ function Dashboard() {
               <input
                 type="number"
                 name="age"
-                value={editForm.age}
+                value={editForm.age || ''}
                 onChange={handleInputChange}
                 min="16"
                 max="100"
@@ -108,7 +122,7 @@ function Dashboard() {
               <input
                 type="number"
                 name="height.feet"
-                value={editForm.height?.feet}
+                value={editForm.height?.feet || ''}
                 onChange={handleInputChange}
                 min="4"
                 max="7"
@@ -119,7 +133,7 @@ function Dashboard() {
               <input
                 type="number"
                 name="height.inches"
-                value={editForm.height?.inches}
+                value={editForm.height?.inches || ''}
                 onChange={handleInputChange}
                 min="0"
                 max="11"
@@ -130,7 +144,7 @@ function Dashboard() {
               <input
                 type="number"
                 name="weight"
-                value={editForm.weight}
+                value={editForm.weight || ''}
                 onChange={handleInputChange}
                 min="50"
                 max="500"
@@ -139,7 +153,7 @@ function Dashboard() {
             </div>
             <div className="form-group">
               <label>Fitness Level</label>
-              <select name="fitnessLevel" value={editForm.fitnessLevel} onChange={handleInputChange}>
+              <select name="fitnessLevel" value={editForm.fitnessLevel || ''} onChange={handleInputChange}>
                 <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
                 <option value="advanced">Advanced</option>
@@ -147,7 +161,7 @@ function Dashboard() {
             </div>
             <div className="form-group">
               <label>Activity Level</label>
-              <select name="activityLevel" value={editForm.activityLevel} onChange={handleInputChange}>
+              <select name="activityLevel" value={editForm.activityLevel || ''} onChange={handleInputChange}>
                 <option value="sedentary">Sedentary</option>
                 <option value="lightly">Lightly Active</option>
                 <option value="moderately">Moderately Active</option>
@@ -162,12 +176,12 @@ function Dashboard() {
           </div>
         );
 
-      case 'progress':
+      case 'goals':
         return (
           <div className="edit-form">
             <div className="form-group">
               <label>Goal</label>
-              <select name="goal" value={editForm.goal} onChange={handleInputChange}>
+              <select name="goal" value={editForm.goal || ''} onChange={handleInputChange}>
                 <option value="weight loss">Weight Loss</option>
                 <option value="muscle gain">Muscle Gain</option>
                 <option value="endurance">Endurance</option>
@@ -181,27 +195,29 @@ function Dashboard() {
               <input
                 type="number"
                 name="goalWeight"
-                value={editForm.goalWeight}
+                value={editForm.goalWeight || ''}
                 onChange={handleInputChange}
                 min="50"
                 max="500"
                 step="0.1"
               />
             </div>
-            <div className="form-group">
-              <label>Weekly Target (lbs/week)</label>
-              <input
-                type="number"
-                name="weeklyTarget"
-                value={editForm.weeklyTarget}
-                onChange={handleInputChange}
-                min="0.5"
-                max="2"
-                step="0.1"
-              />
-            </div>
+            {editForm.goal === 'weight loss' && (
+              <div className="form-group">
+                <label>Weekly Target (lbs/week)</label>
+                <input
+                  type="number"
+                  name="weeklyTarget"
+                  value={editForm.weeklyTarget || ''}
+                  onChange={handleInputChange}
+                  min="0.5"
+                  max="2"
+                  step="0.1"
+                />
+              </div>
+            )}
             <div className="edit-form-buttons">
-              <button onClick={() => handleSave('progress')} className="save-button">Save</button>
+              <button onClick={() => handleSave('goals')} className="save-button">Save</button>
               <button onClick={handleCancel} className="cancel-button">Cancel</button>
             </div>
           </div>

@@ -1,0 +1,227 @@
+.exercise-tracker {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+  color: #ffffff;
+}
+
+.exercise-tracker h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ffffff;
+  font-size: 1.8rem;
+}
+
+/* Form Styles */
+.exercise-form-container {
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.exercise-form-container h3 {
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.exercise-form {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  color: #a0a0a0;
+  font-size: 0.85rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: #2d2d2d;
+  border: 1px solid #404040;
+  border-radius: 4px;
+  padding: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #4ECDC4;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.intensity-value {
+  color: #4ECDC4;
+  font-size: 0.95rem;
+  margin-top: 4px;
+}
+
+.submit-button {
+  background: #4ECDC4;
+  color: #1a1a1a;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 8px;
+}
+
+.submit-button:hover {
+  background: #45b7af;
+}
+
+/* Exercise History Styles */
+.exercise-history {
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-history h3 {
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.no-exercises {
+  text-align: center;
+  color: #a0a0a0;
+  padding: 20px;
+  background: #2d2d2d;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Date Group Styles */
+.exercise-date-group {
+  margin-bottom: 25px;
+}
+
+.exercise-date-group:last-child {
+  margin-bottom: 0;
+}
+
+.date-header {
+  color: #4ECDC4;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #404040;
+}
+
+/* Table Styles */
+.exercise-table-container {
+  overflow-x: auto;
+  background: #2d2d2d;
+  border-radius: 4px;
+  padding: 1px;
+}
+
+.exercise-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.exercise-table th {
+  background: #1a1a1a;
+  color: #ffffff;
+  font-weight: 500;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  border-bottom: 2px solid #404040;
+}
+
+.exercise-table td {
+  padding: 12px 16px;
+  color: #ffffff;
+  border-bottom: 1px solid #404040;
+  font-size: 0.95rem;
+}
+
+.exercise-table tr:last-child td {
+  border-bottom: none;
+}
+
+.exercise-table tr:hover {
+  background: #252525;
+}
+
+.exercise-table td:last-child {
+  text-align: right;
+  width: 80px;
+}
+
+.delete-button {
+  background: none;
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+  min-width: 60px;
+  text-align: center;
+}
+
+.delete-button:hover {
+  background: #dc3545;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .exercise-tracker {
+    padding: 15px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .exercise-table-container {
+    margin: 0 -15px;
+    border-radius: 0;
+  }
+
+  .exercise-table th,
+  .exercise-table td {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .exercise-form-container,
+  .exercise-history {
+    padding: 15px;
+  }
+
+  .date-header {
+    font-size: 1rem;
+  }
+} 

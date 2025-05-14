@@ -8,6 +8,8 @@ import Contact from './pages/Contact';
 import Home from './pages/Home';
 import Onboarding from './components/Onboarding';
 import { FitnessPlanProvider } from './context/FitnessPlanContext';
+import ExerciseTracker from './pages/ExerciseTracker';
+import MacroCalculator from './pages/MacroCalculator';
 
 function AppContent() {
   const [onboardingComplete, setOnboardingComplete] = useState(false);
@@ -16,6 +18,11 @@ function AppContent() {
     const isComplete = localStorage.getItem('onboardingComplete') === 'true';
     setOnboardingComplete(isComplete);
   }, []);
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem('onboardingComplete', 'true');
+    setOnboardingComplete(true);
+  };
 
   // Add event listener for storage changes
   useEffect(() => {
@@ -34,7 +41,7 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/onboarding" element={<Onboarding onComplete={handleOnboardingComplete} />} />
           <Route 
             path="/dashboard" 
             element={
@@ -46,6 +53,8 @@ function AppContent() {
             } 
           />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/exercise-tracker" element={<ExerciseTracker />} />
+          <Route path="/macro-calculator" element={<MacroCalculator />} />
         </Routes>
       </main>
       <Footer />

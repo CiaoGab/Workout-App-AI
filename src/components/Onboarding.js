@@ -135,9 +135,14 @@ function Onboarding({ onComplete }) {
         }
       };
       
+      // Initialize fitness plan
       initializeFitnessPlan(formattedProfile);
+      
+      // Call onComplete callback to update app state
       if (onComplete) onComplete();
-      navigate('/dashboard');
+      
+      // Navigate to dashboard
+      navigate('/dashboard', { replace: true });
     }
   };
 

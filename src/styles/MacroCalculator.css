@@ -1,184 +1,386 @@
 .macro-calculator {
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  box-sizing: border-box;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+  color: #ffffff;
 }
 
-.macro-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.macro-calculator-container {
+  background: #1a1a1a;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.macro-calculator h2 {
+  text-align: center;
   margin-bottom: 20px;
-  padding: 0 16px;
-  box-sizing: border-box;
+  color: #ffffff;
+  font-size: 1.8rem;
 }
 
-.macro-header h2 {
-  margin: 0;
-  color: #333;
-  font-size: 1.5rem;
-}
-
-.edit-button {
-  background: #f0f0f0;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.edit-button:hover {
-  background: #e0e0e0;
-}
-
-.edit-button.active {
-  background: #ff6b6b;
-  color: white;
-}
-
-.macro-content {
+.macro-form {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 48px;
-  align-items: start;
-  padding: 0 16px;
-  box-sizing: border-box;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
-.macro-chart {
-  min-height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.macro-details {
+.form-group {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  width: 100%;
+  gap: 4px;
 }
 
-.macro-item {
-  background: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 24px;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
+.form-group label {
+  color: #a0a0a0;
+  font-size: 0.85rem;
 }
 
-.macro-label {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.macro-color {
-  width: 20px;
-  height: 20px;
+.form-group input,
+.form-group select {
+  background: #2d2d2d;
+  border: 1px solid #404040;
   border-radius: 4px;
-}
-
-.macro-label h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.macro-values {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  text-align: right;
-}
-
-.macro-values p {
-  margin: 0;
-  font-size: 1rem;
-  color: #666;
-}
-
-.macro-slider {
+  padding: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
   width: 100%;
-  height: 4px;
-  -webkit-appearance: none;
-  background: #e0e0e0;
-  border-radius: 2px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
   outline: none;
-  margin-top: 12px;
+  border-color: #4ECDC4;
 }
 
-.macro-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  background: #333;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.macro-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  background: #333;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-}
-
-.macro-actions {
-  margin-top: 24px;
+.height-inputs {
   display: flex;
-  justify-content: flex-end;
-  padding: 0 16px;
-  box-sizing: border-box;
+  gap: 8px;
 }
 
-.save-button {
-  background: #4ECDC4;
-  color: white;
+.height-input {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #2d2d2d;
+  border: 1px solid #404040;
+  border-radius: 4px;
+  padding: 0 8px;
+}
+
+.height-input input {
+  background: none;
   border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  padding: 8px 0;
+  color: #ffffff;
+  font-size: 0.95rem;
+  width: 100%;
 }
 
-.save-button:hover {
+.height-input input:focus {
+  outline: none;
+}
+
+.height-input span {
+  color: #a0a0a0;
+  font-size: 0.85rem;
+  margin-left: 6px;
+}
+
+.macro-inputs {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.macro-input {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #2d2d2d;
+  border: 1px solid #404040;
+  border-radius: 4px;
+  padding: 0 8px;
+  min-width: 120px;
+  max-width: 140px;
+}
+
+.macro-input input {
+  background: none;
+  border: none;
+  padding: 8px 0;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  width: 40px;
+  text-align: center;
+}
+
+.macro-input input:focus {
+  outline: none;
+}
+
+.macro-input span {
+  color: #a0a0a0;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  min-width: 45px;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.calculate-button,
+.reset-button {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.calculate-button {
+  background: #4ECDC4;
+  color: #1a1a1a;
+}
+
+.calculate-button:hover {
   background: #45b7af;
 }
 
-.save-button:disabled {
-  background: #ccc;
-  cursor: not-allowed;
+.reset-button {
+  background: #404040;
+  color: #ffffff;
 }
 
-@media (max-width: 1024px) {
-  .macro-content {
+.reset-button:hover {
+  background: #505050;
+}
+
+.macro-results {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #404040;
+}
+
+.total-calories {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.total-calories h3 {
+  color: #a0a0a0;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.total-calories-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4ECDC4;
+}
+
+.total-calories-unit {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.macro-chart {
+  margin: 20px 0;
+}
+
+.macro-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.macro-card {
+  background: #2d2d2d;
+  border-radius: 6px;
+  padding: 15px;
+  text-align: center;
+}
+
+.macro-card h3 {
+  color: #ffffff;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.macro-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #4ECDC4;
+  margin-bottom: 4px;
+}
+
+.macro-unit {
+  color: #a0a0a0;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.macro-info {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #404040;
+}
+
+.macro-info h3 {
+  color: #ffffff;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.macro-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.macro-info li {
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.guideline-note {
+  display: block;
+  color: #a0a0a0;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.note {
+  color: #a0a0a0;
+  font-size: 0.85rem;
+  margin-top: 15px;
+  line-height: 1.4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .macro-calculator-container {
+    padding: 15px;
+  }
+
+  .macro-inputs {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .macro-input {
+    width: 100%;
+    min-width: unset;
+    max-width: none;
+  }
+
+  .macro-input input {
+    width: 50px;
+  }
+
+  .macro-cards {
     grid-template-columns: 1fr;
-    gap: 32px;
   }
-  
-  .macro-chart {
-    min-height: 250px;
-  }
-  
-  .macro-item {
+}
+
+.macro-calculator-page {
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #1a1a1a;
+}
+
+/* Remove the old custom macros styles */
+.custom-macros,
+.checkbox-label,
+.macro-inputs,
+.macro-input-group {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .macro-inputs {
     grid-template-columns: 1fr;
+    gap: 15px;
   }
-  
-  .macro-values {
-    text-align: left;
+
+  .custom-macros {
+    padding: 15px;
+  }
+}
+
+.macro-inputs {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 8px;
+  justify-content: space-between;
+}
+
+.macro-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  background: #1a1a1a;
+  border: 1px solid #404040;
+  border-radius: 6px;
+  padding: 0 12px;
+  min-width: 140px;
+  max-width: 160px;
+}
+
+.macro-input input {
+  width: 45px;
+  padding: 10px 0;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 1.1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.macro-input input:focus {
+  outline: none;
+}
+
+.macro-input span {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  min-width: 50px;
+}
+
+/* Remove the total distribution styles */
+.macro-total,
+.macro-total::before {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .macro-inputs {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .macro-input {
+    width: 100%;
+    min-width: unset;
+    max-width: none;
+  }
+
+  .macro-input input {
+    width: 60px;
   }
 } 
