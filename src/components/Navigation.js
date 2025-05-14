@@ -60,21 +60,8 @@ function Navigation() {
 
       <nav className={`main-nav ${isMenuOpen ? 'active' : ''}`}>
         <div className="nav-links">
-          <NavLink to="/" end className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
-            Home
-          </NavLink>
-          <NavLink to="/weight-history" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
-            Weight
-          </NavLink>
-          <NavLink to="/exercise-tracker" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
-            Exercise
-          </NavLink>
-          <NavLink to="/formulas" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
-            Calculators
-          </NavLink>
-          <NavLink to="/contact" className={({ isActive }) => isActive ? 'active' : ''} onClick={closeMenu}>
-            Contact
-          </NavLink>
+          <NavLink to="/" end>Home</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
         </div>
         {renderUnitToggle()}
       </nav>

@@ -1,99 +1,86 @@
 import React, { useState, useEffect } from 'react';
-import { useUnit } from '../context/UnitContext';
 
 function WeightTracker() {
   const [weight, setWeight] = useState('');
   const [weightHistory, setWeightHistory] = useState([]);
-  const { isMetric, convertWeight, getWeightUnit } = useUnit();
 
   useEffect(() => {
-    const savedWeight = localStorage.getItem('weightHistory');
-    if (savedWeight) {
-      setWeightHistory(JSON.parse(savedWeight));
+    const savedHistory = localStorage.getItem('weightHistory');
+    if (savedHistory) {
+      setWeightHistory(JSON.parse(savedHistory));
     }
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!weight) return;
-
-    // Convert to metric for storage if in imperial
-    const weightInKg = isMetric ? parseFloat(weight) : parseFloat(weight) / 2.20462;
-
     const newEntry = {
-      id: Date.now(),
-      weight: weightInKg,
-      date: new Date().toLocaleDateString()
+      date: new Date().toISOString().split('T')[0],
+      weight: parseFloat(weight)
     };
-
-    const updatedHistory = [...weightHistory, newEntry];
+    
+    const updatedHistory = [...weightHistory, newEntry].sort((a, b) => 
+      new Date(b.date) - new Date(a.date)
+    );
+    
     setWeightHistory(updatedHistory);
     localStorage.setItem('weightHistory', JSON.stringify(updatedHistory));
     setWeight('');
   };
 
-  const handleDelete = (id) => {
-    const updatedHistory = weightHistory.filter(entry => entry.id !== id);
+  const handleDelete = (date) => {
+    const updatedHistory = weightHistory.filter(entry => entry.date !== date);
     setWeightHistory(updatedHistory);
     localStorage.setItem('weightHistory', JSON.stringify(updatedHistory));
   };
 
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
-
   return (
-    <div>
+    <div className="weight-tracker">
       <h2>Weight Tracker</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="number"
-          step="0.1"
-          value={weight}
-          onChange={(e) => setWeight(e.target.value)}
-          placeholder={`Enter weight (${getWeightUnit()})`}
-          required
-        />
+      <form onSubmit={handleSubmit} className="weight-form">
+        <div className="form-group">
+          <label htmlFor="weight">Current Weight (lbs)</label>
+          <input
+            type="number"
+            id="weight"
+            value={weight}
+            onChange={(e) => setWeight(e.target.value)}
+            step="0.1"
+            min="50"
+            max="500"
+            required
+          />
+        </div>
         <button type="submit">Add Weight</button>
       </form>
-      
+
       {weightHistory.length > 0 && (
         <div className="weight-history">
-          <h3>Latest Weight: {convertWeight(weightHistory[weightHistory.length - 1].weight)} {getWeightUnit()}</h3>
-          <p>Last updated: {formatDate(weightHistory[weightHistory.length - 1].date)}</p>
-          
-          <div className="weight-history-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Weight</th>
-                  <th>Actions</th>
+          <h3>Weight History</h3>
+          <table className="weight-history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Weight (lbs)</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {weightHistory.map((entry) => (
+                <tr key={entry.date}>
+                  <td>{entry.date}</td>
+                  <td>{entry.weight}</td>
+                  <td>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(entry.date)}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {weightHistory.slice().reverse().map(entry => (
-                  <tr key={entry.id}>
-                    <td>{formatDate(entry.date)}</td>
-                    <td>{convertWeight(entry.weight)} {getWeightUnit()}</td>
-                    <td>
-                      <button
-                        onClick={() => handleDelete(entry.id)}
-                        className="delete-btn"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

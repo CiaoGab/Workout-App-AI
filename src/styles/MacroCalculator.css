@@ -1,0 +1,184 @@
+.macro-calculator {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.macro-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.macro-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.edit-button {
+  background: #f0f0f0;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.edit-button:hover {
+  background: #e0e0e0;
+}
+
+.edit-button.active {
+  background: #ff6b6b;
+  color: white;
+}
+
+.macro-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 48px;
+  align-items: start;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.macro-chart {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.macro-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.macro-item {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.macro-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.macro-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.macro-label h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.macro-values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  text-align: right;
+}
+
+.macro-values p {
+  margin: 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+.macro-slider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  background: #e0e0e0;
+  border-radius: 2px;
+  outline: none;
+  margin-top: 12px;
+}
+
+.macro-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #333;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.macro-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: #333;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+.macro-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.save-button {
+  background: #4ECDC4;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-button:hover {
+  background: #45b7af;
+}
+
+.save-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+  .macro-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .macro-chart {
+    min-height: 250px;
+  }
+  
+  .macro-item {
+    grid-template-columns: 1fr;
+  }
+  
+  .macro-values {
+    text-align: left;
+  }
+} 

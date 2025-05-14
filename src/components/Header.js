@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useUnit } from '../context/UnitContext';
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { isMetric, toggleUnit } = useUnit();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -33,15 +31,6 @@ function Header() {
             <Link to="/contact" onClick={closeMenu} className={location.pathname === '/contact' ? 'active' : ''}>
               Contact
             </Link>
-          </div>
-          
-          <div className="unit-slider-container">
-            <span className={`unit-label ${!isMetric ? 'active' : ''}`}>lbs</span>
-            <label className="unit-slider">
-              <input type="checkbox" checked={isMetric} onChange={toggleUnit} />
-              <span className="slider"></span>
-            </label>
-            <span className={`unit-label ${isMetric ? 'active' : ''}`}>kg</span>
           </div>
         </nav>
 

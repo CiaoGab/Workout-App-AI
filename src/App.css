@@ -24,6 +24,18 @@
   box-sizing: border-box;
 }
 
+/* Remove number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 html, body {
   width: 100%;
   height: 100%;
@@ -118,102 +130,37 @@ body {
   background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Unit Slider Toggle */
-.unit-slider-container {
+/* Remove unit toggle styles */
+.unit-slider-container,
+.unit-slider,
+.unit-label,
+.slider,
+.nav-unit-toggle {
+  display: none;
+}
+
+/* Height inputs styling */
+.height-inputs {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.height-input {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-left: 1rem;
-  background: linear-gradient(45deg, #0070f3, #7928ca);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  transition: all 0.3s ease;
 }
 
-.unit-slider-container:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+.height-input input {
+  flex: 1;
 }
 
-.unit-label {
+.height-input span {
   color: var(--foreground);
-  font-size: 0.8rem;
-  opacity: 0.6;
-  transition: all 0.3s ease;
-  font-weight: 500;
-}
-
-.unit-label.active {
-  opacity: 1;
-  font-weight: 600;
-}
-
-.unit-slider {
-  position: relative;
-  display: inline-block;
-  width: 36px;
-  height: 20px;
-  margin: 0 0.25rem;
-}
-
-.unit-slider input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 0.3);
-  transition: .3s;
-  border-radius: 20px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 2px;
-  bottom: 2px;
-  background-color: white;
-  transition: .3s;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-input:checked + .slider {
-  background-color: #3498db;
-}
-
-input:checked + .slider:before {
-  transform: translateX(16px);
-}
-
-/* Navbar Unit Toggle */
-.nav-unit-toggle {
-  background: linear-gradient(45deg, #0070f3, #7928ca);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 0.5rem 0.75rem;
-  margin-left: 0.5rem;
   font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: auto;
-  min-height: auto;
-  font-weight: 500;
-}
-
-.nav-unit-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
 }
 
 /* Hamburger Menu */
@@ -771,6 +718,9 @@ td {
   transition: all 0.3s ease;
   border: none;
   cursor: pointer;
+  width: auto;
+  min-width: 200px;
+  margin-top: 2rem;
 }
 
 .cta-button:hover {
@@ -1541,104 +1491,385 @@ button:hover {
 }
 
 .dashboard-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .dashboard-card {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
   transition: all 0.3s ease;
-  color: var(--foreground);
-  width: 100%;
 }
 
 .dashboard-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.dashboard-card h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  text-align: left;
+.dashboard-card h3 {
   color: var(--foreground);
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1200px) {
-  .dashboard {
-    padding: 1.5rem;
-  }
-  
-  .dashboard-grid {
-    gap: 1.5rem;
-  }
+/* Profile Stats */
+.profile-stats {
+  display: grid;
+  gap: 1rem;
 }
 
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.stat-label {
+  color: var(--gray-400);
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.metric-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.metric-label {
+  color: var(--gray-400);
+  font-size: 0.9rem;
+}
+
+.metric-value {
+  color: var(--foreground);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.metric-description {
+  color: var(--gray-400);
+  font-size: 0.8rem;
+}
+
+/* Goals Section */
+.goals-section {
+  display: grid;
+  gap: 1rem;
+}
+
+.goal-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.goal-label {
+  color: var(--gray-400);
+  font-size: 0.9rem;
+}
+
+.goal-value {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+/* Heart Rate Zones */
+.zones-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.zone-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.zone-label {
+  color: var(--gray-400);
+  font-size: 0.9rem;
+}
+
+.zone-range {
+  color: var(--foreground);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.zone-description {
+  color: var(--gray-400);
+  font-size: 0.8rem;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-  .dashboard {
-    padding: 1rem;
-  }
-  
   .dashboard-grid {
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .dashboard-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
-  
-  .dashboard-card h2 {
-    font-size: 1.5rem;
+
+  .metric-value {
+    font-size: 1.1rem;
   }
 }
 
-/* Weight and Exercise Tracker Styles */
-.weight-tracker,
-.exercise-tracker {
+/* User Profile Styles */
+.user-profile {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
   color: var(--foreground);
+  width: 100%;
 }
 
-.weight-tracker h2,
-.exercise-tracker h2 {
+.user-profile h2 {
   color: var(--foreground);
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 600;
 }
 
-.weight-form,
-.exercise-form {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 2rem;
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.form-section {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
   border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-section h3 {
+  color: var(--foreground);
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.profile-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.profile-form .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.profile-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.profile-form input,
+.profile-form select,
+.profile-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--foreground);
+  transition: all 0.3s ease;
+}
+
+.profile-form input:focus,
+.profile-form select:focus,
+.profile-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.profile-form input::placeholder,
+.profile-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.profile-form .submit-button {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.profile-form .submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .user-profile {
+    padding: 1.5rem;
+  }
+
+  .form-section {
+    padding: 1.25rem;
+  }
+
+  .profile-form input,
+  .profile-form select,
+  .profile-form textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Profile Page Styles */
+.profile-page {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 1rem;
+  }
+}
+
+/* Onboarding Styles */
+.onboarding {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--background);
+}
+
+.onboarding-container {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
   margin-bottom: 2rem;
 }
 
-.weight-form form,
-.exercise-form form {
-  display: grid;
-  gap: 1rem;
-  max-width: 600px;
-  margin: 0 auto;
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 2px;
+  transition: width 0.3s ease;
 }
 
-.weight-form input,
-.exercise-form input,
-.weight-form select,
-.exercise-form select {
+.onboarding-step {
+  margin-bottom: 2rem;
+}
+
+.onboarding-step h2 {
+  color: var(--foreground);
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.onboarding-step p {
+  color: var(--gray-400);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.onboarding-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--foreground);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.next-button, .submit-button {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  color: var(--foreground);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.next-button:hover, .submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.onboarding-step input,
+.onboarding-step select,
+.onboarding-step textarea {
   width: 100%;
   padding: 12px;
   margin: 8px 0;
@@ -1650,142 +1881,421 @@ button:hover {
   transition: all 0.3s ease;
 }
 
-.weight-form input:focus,
-.exercise-form input:focus,
-.weight-form select:focus,
-.exercise-form select:focus {
+.onboarding-step input:focus,
+.onboarding-step select:focus,
+.onboarding-step textarea:focus {
   outline: none;
-  border-color: #ff4444;
-  box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.2);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
 }
 
-.weight-form input::placeholder,
-.exercise-form input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+.onboarding-step input::placeholder,
+.onboarding-step textarea::placeholder {
+  color: var(--gray-400);
 }
 
-.weight-form button,
-.exercise-form button {
-  background: #ff4444;
-  color: white;
-  padding: 12px 24px;
-  border: none;
+@media (max-width: 768px) {
+  .onboarding {
+    padding: 1rem;
+  }
+
+  .onboarding-container {
+    padding: 1.5rem;
+  }
+
+  .onboarding-step h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Form Validation Styles */
+.form-group input.error,
+.form-group select.error {
+  border-color: #ff4d4f;
+  background-color: #fff2f0;
+}
+
+.error-message {
+  color: #ff4d4f;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Preview Step Styles */
+.preview-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: var(--foreground);
+}
+
+.metric-card h3 {
+  color: var(--foreground);
+  margin-bottom: 1.25rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.metric-card p {
+  margin: 0.75rem 0;
+  color: var(--gray-400);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.metric-card p:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.75rem;
+}
+
+.preview-note {
+  text-align: center;
+  color: var(--gray-400);
+  font-size: 0.9rem;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  line-height: 1.6;
+}
+
+.onboarding-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--foreground);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
+  flex: 1;
 }
 
-.weight-form button:hover,
-.exercise-form button:hover {
-  background: #ff6666;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(255, 68, 68, 0.3);
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 
-.weight-history,
-.exercises-list {
-  background: rgba(0, 0, 0, 0.3);
-  padding: 2rem;
-  border-radius: 12px;
-  margin-top: 1.5rem;
-}
-
-.weight-history h3,
-.exercises-list h3 {
+.submit-button {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   color: var(--foreground);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+.submit-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .preview-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .metric-card {
+    padding: 1.25rem;
+  }
+
+  .metric-card p {
+    font-size: 0.9rem;
+  }
+
+  .preview-note {
+    font-size: 0.85rem;
+    padding: 0.875rem;
+  }
+
+  .onboarding-buttons {
+    flex-direction: column;
+  }
+
+  .back-button,
+  .submit-button {
+    width: 100%;
+    padding: 0.875rem;
+  }
+}
+
+/* Dashboard Card Headers */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.5rem;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
+  gap: 1rem;
 }
 
-.weight-history-table,
-.exercises-list table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-top: 1rem;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
-  overflow: hidden;
+.card-header h3 {
+  margin: 0;
+  flex: 1;
 }
 
-.weight-history-table th,
-.exercises-list th {
-  background: linear-gradient(45deg, #0070f3, #7928ca);
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.edit-button,
+.recalculate-button {
+  background: rgba(255, 255, 255, 0.1);
   color: var(--foreground);
-  padding: 1rem;
-  text-align: left;
-  font-weight: 600;
-}
-
-.weight-history-table td,
-.exercises-list td {
-  padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--foreground);
-}
-
-.weight-history-table .delete-btn,
-.exercises-list .delete-btn {
-  background: rgba(255, 68, 68, 0.2);
-  color: #ff4444;
-  padding: 8px 16px;
-  border: 1px solid #ff4444;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
   border-radius: 6px;
   font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.edit-button:hover,
+.recalculate-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.recalculate-button {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  border: none;
+}
+
+.recalculate-button:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile adjustments for card headers */
+@media (max-width: 768px) {
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .card-header h3 {
+    width: 100%;
+  }
+
+  .card-actions {
+    width: 100%;
+  }
+
+  .edit-button,
+  .recalculate-button {
+    width: 100%;
+    padding: 0.75rem;
+    height: 44px;
+  }
+}
+
+/* Edit Form Styles */
+.edit-form {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.edit-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.edit-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--gray-400);
+  font-size: 0.9rem;
+}
+
+.edit-form input,
+.edit-form select {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: var(--foreground);
+  font-size: 1rem;
   transition: all 0.3s ease;
 }
 
-.weight-history-table .delete-btn:hover,
-.exercises-list .delete-btn:hover {
-  background: #ff4444;
+.edit-form input:focus,
+.edit-form select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.edit-form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.save-button,
+.cancel-button {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.save-button {
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
   color: white;
 }
 
-/* Latest weight display */
-.weight-history h3 {
+.save-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-button {
+  background: rgba(255, 255, 255, 0.1);
   color: var(--foreground);
-  margin-bottom: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.weight-history p {
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 1.5rem;
+.cancel-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
-/* Mobile adjustments */
+/* Mobile adjustments for edit forms */
 @media (max-width: 768px) {
-  .weight-tracker,
-  .exercise-tracker {
-    padding: 1.5rem;
+  .edit-form {
+    padding: 1.25rem;
   }
 
-  .weight-form,
-  .exercise-form {
-    padding: 1.5rem;
+  .edit-form input,
+  .edit-form select {
+    padding: 0.625rem;
+    font-size: 0.95rem;
   }
 
-  .weight-history,
-  .exercises-list {
-    padding: 1.5rem;
+  .edit-form-buttons {
+    flex-direction: column;
   }
 
-  .weight-history-table,
-  .exercises-list table {
-    display: block;
+  .save-button,
+  .cancel-button {
     width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    padding: 0.875rem;
   }
+}
 
-  .weight-history-table th,
-  .weight-history-table td,
-  .exercises-list th,
-  .exercises-list td {
-    padding: 0.75rem;
-    font-size: 0.9rem;
+/* Form Elements Styling */
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--foreground);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+  padding-right: 2.5rem;
+}
+
+select:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+}
+
+select option {
+  background: var(--background);
+  color: var(--foreground);
+  padding: 0.75rem;
+}
+
+/* Error state for select elements */
+select.error {
+  border-color: var(--error);
+}
+
+select.error:focus {
+  box-shadow: 0 0 0 2px rgba(var(--error-rgb), 0.2);
+}
+
+/* Disabled state for select elements */
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Mobile adjustments for select elements */
+@media (max-width: 768px) {
+  select {
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  select {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  
+  select:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  select:disabled {
+    background-color: rgba(255, 255, 255, 0.02);
   }
 } 

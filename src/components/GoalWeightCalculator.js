@@ -1,30 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useUnit } from '../context/UnitContext';
+import React, { useState } from 'react';
 
 function GoalWeightCalculator() {
   const [formData, setFormData] = useState({
     currentWeight: '',
     goalWeight: '',
-    tdee: '',
-    activityLevel: 'moderate'
+    timeframe: '12'
   });
-  const [results, setResults] = useState(null);
-  const { isMetric, convertWeight, getWeightUnit } = useUnit();
 
-  useEffect(() => {
-    // Get the latest weight from localStorage
-    const savedWeight = localStorage.getItem('weightHistory');
-    if (savedWeight) {
-      const weightHistory = JSON.parse(savedWeight);
-      if (weightHistory.length > 0) {
-        const latestWeight = weightHistory[weightHistory.length - 1].weight;
-        setFormData(prev => ({
-          ...prev,
-          currentWeight: convertWeight(latestWeight)
-        }));
-      }
-    }
-  }, [isMetric]); // Re-run when unit system changes
+  const [results, setResults] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,119 +17,84 @@ function GoalWeightCalculator() {
     }));
   };
 
-  const calculateTimeToGoal = (e) => {
+  const calculateGoal = (e) => {
     e.preventDefault();
-    const { currentWeight, goalWeight, tdee } = formData;
-
-    // Convert weights to kg for calculations
-    const currentWeightKg = isMetric ? parseFloat(currentWeight) : parseFloat(currentWeight) / 2.20462;
-    const goalWeightKg = isMetric ? parseFloat(goalWeight) : parseFloat(goalWeight) / 2.20462;
-    const weightToLose = currentWeightKg - goalWeightKg;
-
-    // Different deficit scenarios (calories per day)
-    const scenarios = [
-      { name: 'Aggressive', deficit: 1000, description: 'Maximum recommended deficit' },
-      { name: 'Moderate', deficit: 750, description: 'Balanced approach' },
-      { name: 'Conservative', deficit: 500, description: 'Slow and steady' },
-      { name: 'Very Conservative', deficit: 250, description: 'Minimal deficit' }
-    ];
-
-    // Calculate time for each scenario
-    const results = scenarios.map(scenario => {
-      // 7700 calories = 1kg of fat
-      const daysToGoal = Math.ceil((weightToLose * 7700) / scenario.deficit);
-      const weeksToGoal = Math.ceil(daysToGoal / 7);
-      const monthsToGoal = Math.ceil(daysToGoal / 30);
-      
-      return {
-        ...scenario,
-        daysToGoal,
-        weeksToGoal,
-        monthsToGoal,
-        dailyCalories: Math.round(parseFloat(tdee) - scenario.deficit)
-      };
-    });
+    const { currentWeight, goalWeight, timeframe } = formData;
+    
+    const weightDiff = parseFloat(goalWeight) - parseFloat(currentWeight);
+    const weeklyChange = weightDiff / (parseInt(timeframe) / 4);
+    const dailyCalorieAdjustment = Math.round(weeklyChange * 500); // 500 calories ≈ 1 lb per week
 
     setResults({
-      weightToLose: weightToLose,
-      scenarios: results
+      weeklyChange: weeklyChange.toFixed(1),
+      dailyCalorieAdjustment,
+      isWeightLoss: weightDiff < 0
     });
   };
 
   return (
-    <div>
+    <div className="goal-weight-calculator">
       <h2>Goal Weight Calculator</h2>
-      <form onSubmit={calculateTimeToGoal}>
-        <input
-          type="number"
-          name="currentWeight"
-          value={formData.currentWeight}
-          onChange={handleChange}
-          placeholder={`Current Weight (${getWeightUnit()})`}
-          required
-          step="0.1"
-        />
+      <form onSubmit={calculateGoal} className="goal-form">
+        <div className="form-group">
+          <label htmlFor="currentWeight">Current Weight (lbs)</label>
+          <input
+            type="number"
+            id="currentWeight"
+            name="currentWeight"
+            value={formData.currentWeight}
+            onChange={handleChange}
+            min="50"
+            max="500"
+            step="0.1"
+            required
+          />
+        </div>
 
-        <input
-          type="number"
-          name="goalWeight"
-          value={formData.goalWeight}
-          onChange={handleChange}
-          placeholder={`Goal Weight (${getWeightUnit()})`}
-          required
-          step="0.1"
-        />
+        <div className="form-group">
+          <label htmlFor="goalWeight">Goal Weight (lbs)</label>
+          <input
+            type="number"
+            id="goalWeight"
+            name="goalWeight"
+            value={formData.goalWeight}
+            onChange={handleChange}
+            min="50"
+            max="500"
+            step="0.1"
+            required
+          />
+        </div>
 
-        <input
-          type="number"
-          name="tdee"
-          value={formData.tdee}
-          onChange={handleChange}
-          placeholder="Your TDEE (calories)"
-          required
-        />
+        <div className="form-group">
+          <label htmlFor="timeframe">Timeframe (weeks)</label>
+          <select
+            id="timeframe"
+            name="timeframe"
+            value={formData.timeframe}
+            onChange={handleChange}
+            required
+          >
+            <option value="4">4 weeks</option>
+            <option value="8">8 weeks</option>
+            <option value="12">12 weeks</option>
+            <option value="16">16 weeks</option>
+            <option value="24">24 weeks</option>
+          </select>
+        </div>
 
-        <button type="submit">Calculate Time to Goal</button>
+        <button type="submit">Calculate Plan</button>
       </form>
 
       {results && (
         <div className="goal-results">
-          <h3>Time to Reach Goal Weight</h3>
-          <p className="weight-to-lose">
-            Weight to lose: {convertWeight(results.weightToLose)} {getWeightUnit()}
+          <h3>Your Plan</h3>
+          <p>Weekly {results.isWeightLoss ? 'Weight Loss' : 'Weight Gain'}: {Math.abs(results.weeklyChange)} lbs</p>
+          <p>Daily Calorie {results.isWeightLoss ? 'Deficit' : 'Surplus'}: {Math.abs(results.dailyCalorieAdjustment)} calories</p>
+          <p className="note">
+            Note: For healthy and sustainable results, aim for 0.5-1 lb of {results.isWeightLoss ? 'weight loss' : 'weight gain'} per week.
+            {Math.abs(results.weeklyChange) > 1 && ' Your current plan may be too aggressive.'}
           </p>
-          
-          <div className="scenarios-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Approach</th>
-                  <th>Daily Calories</th>
-                  <th>Time to Goal</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {results.scenarios.map((scenario, index) => (
-                  <tr key={index} className={`scenario-${index + 1}`}>
-                    <td>{scenario.name}</td>
-                    <td>{scenario.dailyCalories} cal</td>
-                    <td>
-                      {scenario.monthsToGoal} months
-                      <br />
-                      ({scenario.weeksToGoal} weeks)
-                    </td>
-                    <td>{scenario.description}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          
-          <div className="disclaimer">
-            <p>* These calculations are estimates based on a caloric deficit. Actual results may vary based on individual factors.</p>
-            <p>* It's recommended to consult with a healthcare professional before starting any weight loss program.</p>
-          </div>
         </div>
       )}
     </div>
