@@ -3,6 +3,11 @@
   margin: 0 auto;
   padding: 10px;
   color: #ffffff;
+  background: #1a1a1a;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
 }
 
 .exercise-tracker h2 {
@@ -136,7 +141,7 @@
 /* Table Styles */
 .exercise-table-container {
   overflow-x: auto;
-  background: #2d2d2d;
+  background: #1a1a1a;
   border-radius: 4px;
   padding: 1px;
 }

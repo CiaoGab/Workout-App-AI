@@ -4,7 +4,7 @@
 :root {
   --primary: #0070f3;
   --secondary: #7928ca;
-  --background: #000000;
+  --background: #1a1a1a;
   --foreground: #ffffff;
   --gray-100: #f7f7f7;
   --gray-200: #e6e6e6;
@@ -413,10 +413,7 @@ main {
 .exercise-tracker-page,
 .formulas-page,
 .contact-page {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #1a1a1a;
   border-radius: 20px;
   padding: 2rem;
   margin: 0 auto;
