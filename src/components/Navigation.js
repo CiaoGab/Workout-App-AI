@@ -25,11 +25,6 @@ function Navigation() {
   }, [isMenuOpen]);
 
   const renderUnitToggle = () => {
-    // Don't render on home page
-    if (location.pathname === '/') {
-      return null;
-    }
-    
     return (
       <div className="unit-slider-container">
         <span className={`unit-label ${isMetric ? 'active' : ''}`}>Metric</span>

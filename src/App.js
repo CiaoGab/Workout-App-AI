@@ -4,9 +4,7 @@ import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Landing from './pages/Landing';
-import WeightHistory from './pages/WeightHistory';
-import ExerciseTracker from './pages/ExerciseHistory';
-import Formulas from './pages/Formulas';
+import Dashboard from './pages/Dashboard';
 import Contact from './pages/Contact';
 import { UnitProvider } from './context/UnitContext';
 
@@ -17,9 +15,7 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/weight-history" element={<WeightHistory />} />
-          <Route path="/exercise-tracker" element={<ExerciseTracker />} />
-          <Route path="/formulas" element={<Formulas />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>

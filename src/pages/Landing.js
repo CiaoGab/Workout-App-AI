@@ -10,9 +10,7 @@ function Landing() {
       </div>
 
       <div className="cta-section">
-        <h2>Ready to Start Your Fitness Journey?</h2>
-        <p>Begin tracking your progress today and achieve your fitness goals.</p>
-        <Link to="/weight-history" className="cta-button">Get Started</Link>
+        <Link to="/dashboard" className="cta-button">Get Started</Link>
       </div>
     </div>
   );

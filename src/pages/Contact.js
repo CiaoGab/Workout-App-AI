@@ -90,13 +90,23 @@ function Contact() {
   };
 
   return (
-    <div className="contact-page" style={{ maxWidth: 600, margin: '3rem auto', background: '#fff', borderRadius: '2rem', boxShadow: '0 4px 24px rgba(0,0,0,0.07)', padding: '2.5rem 2rem' }}>
-      <h2 style={{ marginBottom: '1rem', color: '#2c3e50' }}>Contact Us</h2>
-      <p style={{ marginBottom: '2rem', color: '#666' }}>Have suggestions or feedback? We'd love to hear from you!</p>
+    <div className="contact-page" style={{ 
+      maxWidth: 600, 
+      margin: '3rem auto', 
+      background: 'rgba(0, 0, 0, 0.5)', 
+      backdropFilter: 'blur(10px)',
+      WebkitBackdropFilter: 'blur(10px)',
+      borderRadius: '20px', 
+      boxShadow: '0 4px 24px rgba(0,0,0,0.2)', 
+      padding: '2.5rem 2rem',
+      color: '#ffffff'
+    }}>
+      <h2 style={{ marginBottom: '1rem', color: '#ffffff' }}>Contact Us</h2>
+      <p style={{ marginBottom: '2rem', color: 'rgba(255, 255, 255, 0.7)' }}>Have suggestions or feedback? We'd love to hear from you!</p>
       
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name" style={{ color: '#ffffff' }}>Name:</label>
           <input
             type="text"
             id="name"
@@ -105,11 +115,20 @@ function Contact() {
             onChange={handleChange}
             required
             placeholder="Your name"
+            style={{
+              background: 'rgba(0, 0, 0, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              color: '#ffffff',
+              borderRadius: '8px',
+              padding: '12px',
+              width: '100%',
+              marginTop: '8px'
+            }}
           />
         </div>
         
         <div className="form-group">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email" style={{ color: '#ffffff' }}>Email:</label>
           <input
             type="email"
             id="email"
@@ -118,11 +137,20 @@ function Contact() {
             onChange={handleChange}
             required
             placeholder="your.email@example.com"
+            style={{
+              background: 'rgba(0, 0, 0, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              color: '#ffffff',
+              borderRadius: '8px',
+              padding: '12px',
+              width: '100%',
+              marginTop: '8px'
+            }}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="subject">Subject:</label>
+          <label htmlFor="subject" style={{ color: '#ffffff' }}>Subject:</label>
           <input
             type="text"
             id="subject"
@@ -131,11 +159,20 @@ function Contact() {
             onChange={handleChange}
             required
             placeholder="Subject of your message"
+            style={{
+              background: 'rgba(0, 0, 0, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              color: '#ffffff',
+              borderRadius: '8px',
+              padding: '12px',
+              width: '100%',
+              marginTop: '8px'
+            }}
           />
         </div>
         
         <div className="form-group">
-          <label htmlFor="message">Message:</label>
+          <label htmlFor="message" style={{ color: '#ffffff' }}>Message:</label>
           <textarea
             id="message"
             name="message"
@@ -144,6 +181,16 @@ function Contact() {
             required
             rows="4"
             placeholder="Type your message here..."
+            style={{
+              background: 'rgba(0, 0, 0, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              color: '#ffffff',
+              borderRadius: '8px',
+              padding: '12px',
+              width: '100%',
+              marginTop: '8px',
+              resize: 'vertical'
+            }}
           />
         </div>
         
@@ -152,8 +199,17 @@ function Contact() {
           className="submit-button"
           disabled={sending}
           style={{
+            background: '#ff4444',
+            color: 'white',
+            padding: '12px 24px',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: sending ? 'not-allowed' : 'pointer',
             opacity: sending ? 0.7 : 1,
-            cursor: sending ? 'not-allowed' : 'pointer'
+            width: '100%',
+            fontSize: '16px',
+            fontWeight: '500',
+            transition: 'all 0.3s ease'
           }}
         >
           {sending ? 'Sending...' : 'Send Message'}
@@ -164,10 +220,11 @@ function Contact() {
         <div style={{
           marginTop: '1rem',
           padding: '1rem',
-          backgroundColor: '#d4edda',
-          color: '#155724',
-          borderRadius: '0.5rem',
-          textAlign: 'center'
+          backgroundColor: 'rgba(40, 167, 69, 0.2)',
+          color: '#ffffff',
+          borderRadius: '8px',
+          textAlign: 'center',
+          border: '1px solid rgba(40, 167, 69, 0.3)'
         }}>
           Thank you for your feedback! We'll get back to you soon.
         </div>
@@ -177,10 +234,11 @@ function Contact() {
         <div style={{
           marginTop: '1rem',
           padding: '1rem',
-          backgroundColor: '#f8d7da',
-          color: '#721c24',
-          borderRadius: '0.5rem',
-          textAlign: 'center'
+          backgroundColor: 'rgba(220, 53, 69, 0.2)',
+          color: '#ffffff',
+          borderRadius: '8px',
+          textAlign: 'center',
+          border: '1px solid rgba(220, 53, 69, 0.3)'
         }}>
           {error}
         </div>
